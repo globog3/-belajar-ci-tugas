@@ -16,12 +16,12 @@
         </div> 
         <div class="col-12">
             <label for="kelurahan" class="form-label">Kelurahan</label>
-            <select class="form-control" id="Kelurahan" name="Kelurahan" required></select>
+           <select class="form-control" name="kelurahan" id="kelurahan" required></select>
         </div>
         <div class="col-12">
             <label for="layanan" class="form-label">Layanan</label>
-           <select class="form-control" id="layanan" name="layanan" required></select>
-        </div>
+            <select class="form-control" name="layanan" id="layanan" required></select>
+            </div>
         <div class="col-12">
             <label for="ongkir" class="form-label">Ongkir</label>
             <input type="text" class="form-control" id="ongkir" name="ongkir" readonly>
@@ -84,16 +84,7 @@ $(document).ready(function() {
     var total = 0; 
     hitungTotal();
 
-    function hitungTotal() {
-        total = ongkir + <?= $total ?>;
-
-        $("#ongkir").val(ongkir);
-        $("#total").html("IDR " + total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-        $("#total_harga").val(total);
-    }
-});
-
-$('#kelurahan').select2({
+    $('#kelurahan').select2({
     placeholder: 'Ketik nama kelurahan...',
     ajax: {
         url: '<?= base_url('get-location') ?>',
@@ -118,7 +109,6 @@ $('#kelurahan').select2({
     },
     minimumInputLength: 3
 });
-
 $("#kelurahan").on('change', function() {
     var id_kelurahan = $(this).val(); 
     $("#layanan").empty();
@@ -142,6 +132,20 @@ $("#kelurahan").on('change', function() {
             hitungTotal(); 
         },
     });
+});
+
+$("#layanan").on('change', function() {
+    ongkir = parseInt($(this).val());
+    hitungTotal();
+});  
+
+    function hitungTotal() {
+        total = ongkir + <?= $total ?>;
+
+        $("#ongkir").val(ongkir);
+        $("#total").html("IDR " + total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+        $("#total_harga").val(total);
+    }
 });
 </script>
 <?= $this->endSection() ?>

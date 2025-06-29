@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\TransactionModel;
-use App\Models\TransactionDetailModel;
+use App\Models\TransactionModel; 
+use App\Models\TransactionDetailModel; 
 
 class TransaksiController extends BaseController
 {
@@ -21,7 +21,8 @@ class TransaksiController extends BaseController
         $this->client = new \GuzzleHttp\Client();
         $this->apiKey = env('COST_KEY');
         $this->transaction = new TransactionModel();
-        $this->transaction = new TransactionDetailModel();
+
+$this->transaction_detail = new TransactionDetailModel();
     }
 
     public function index()
@@ -71,6 +72,7 @@ class TransaksiController extends BaseController
         session()->setflashdata('success', 'Keranjang Berhasil Dihapus');
         return redirect()->to(base_url('keranjang'));
     }
+
     public function checkout()
 {
     $data['items'] = $this->cart->contents();
@@ -78,7 +80,6 @@ class TransaksiController extends BaseController
 
     return view('v_checkout', $data);
 }
-
 public function getLocation()
 {
 		//keyword pencarian yang dikirimkan dari halaman checkout
@@ -86,7 +87,7 @@ public function getLocation()
 
     $response = $this->client->request(
         'GET', 
-        'https://rajaongkir.komerce.id/api/v1/destination/domestic-destination?search=semarang'.$search.'&limit=50', [
+        'https://rajaongkir.komerce.id/api/v1/destination/domestic-destination?search='.$search.'&limit=50', [
             'headers' => [
                 'accept' => 'application/json',
                 'key' => $this->apiKey,
@@ -136,7 +137,6 @@ public function getCost()
     $body = json_decode($response->getBody(), true); 
     return $this->response->setJSON($body['data']);
 }
-
 public function buy()
 {
     if ($this->request->getPost()) { 
@@ -174,3 +174,4 @@ public function buy()
     }
 }
 }
+

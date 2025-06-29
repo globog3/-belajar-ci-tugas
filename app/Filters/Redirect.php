@@ -10,16 +10,14 @@ class Redirect implements FilterInterface
 {
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        if (session()->has('first_login')) {
-            return redirect()->to('/keranjang');
-        } else {
-            session()->set('first_login', true);
-            return redirect()->to('/home');
+        // Do something here
+        if (session()->get('isLoggedIn')) {
+                return redirect()->to(site_url('keranjang'));
         }
     }
-
+    
     public function before(RequestInterface $request, $arguments = null)
     {
-        // Kosongkan jika hanya ingin mengatur redirect setelah login
+        // Do something here
     }
 }
